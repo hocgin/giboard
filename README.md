@@ -4,7 +4,7 @@
 
 ## Screen
 
-![img.png](_docs%2Fimg.png)
+![img.png](https://raw.githubusercontent.com/hocgin/giboard/main/_docs/img.png)
 
 ## Usage
 
