@@ -26,7 +26,7 @@ export const Item: FC<{
 }> = ({item}) => {
   let [open, {toggle: toggleOpen, setFalse}] = useBoolean(false);
   let assigness = item?.Assignees ?? [];
-  let description = item?.Description;
+  let description = item?.Description ?? item?.Title;
   let title = item?.Title ?? description;
   let hasContent = !!description;
   return <div className={classnames('Item', 'Progress')} style={{
