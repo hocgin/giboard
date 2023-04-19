@@ -16,6 +16,7 @@
     "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
     "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepublishOnly": "father doctor && npm run build",
+    "release": "npm run build && npm publish --access public",
     "test": "jest"
   },
   "authors": [
