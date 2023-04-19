@@ -1,0 +1,6 @@
+- https://github.com/apollographql/apollo-client
+- https://github.com/lencx/z
+- https://docs.github.com/zh/issues/planning-and-tracking-with-projects/automating-your-project/using-the-api-to-manage-projects
+- https://github.com/octokit/graphql.js
+- UI 设计，https://nextjs.org/
+- https://docs.github.com/zh/graphql/reference/objects

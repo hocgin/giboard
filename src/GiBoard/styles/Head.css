@@ -1,0 +1,44 @@
+.GiBoard .GiHead {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 2px;
+}
+
+.GiBoard .GiHead .GiTitle {
+  font-weight: 900;
+  font-size: 1.8rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.GiBoard .GiHead .GiSegmented {
+  flex-direction: row;
+  padding: 2px 2px;
+  background: #F7F8FA;
+  margin-bottom: 6px;
+  display: inline-flex;
+  width: fit-content;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  box-sizing: border-box;
+  /*border: 1px solid rgb(216, 222, 228);*/
+}
+
+.GiHead .GiSegmented .SegmentedItem {
+  padding: 4px 10px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  color: rgba(36, 41, 47, .8);
+}
+
+.GiHead .GiSegmented .SegmentedItem.Segmented {
+  color: rgb(36, 41, 47);
+  border-radius: 6px;
+  border: 1px solid rgb(216, 222, 228);
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(140, 149, 159, 0.15) 0 1px 1px;
+  transition: color .2s ease-in;
+}

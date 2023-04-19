@@ -1,0 +1,148 @@
+.GiBoard .View {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.GiBoard .List {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgb(216, 222, 228);
+  box-sizing: border-box;
+  background-color: #F7F8FA;
+  overflow-y: auto;
+}
+
+.GiBoard .List:last-child {
+  /*border-right: unset;*/
+}
+
+.GiBoard .List .ListHead {
+  padding-bottom: 4px;
+  padding-top: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: sticky;
+  top: 0;
+  background-color: #F7F8FA;
+}
+
+.GiBoard .List .ListHead .Description {
+  color: rgb(87, 96, 106);
+  font-size: .8rem;
+}
+
+.GiBoard .List .Body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/*  Item */
+.GiBoard .Item {
+  border-radius: 6px;
+  background-color: rgb(255, 255, 255);
+  border: solid 1px rgb(208, 215, 222);
+  padding: 8px;
+  box-shadow: rgba(140, 149, 159, 0.15) 0 1px 2px;
+  color: rgb(36, 41, 47);
+  font-size: 14px;
+}
+
+.GiBoard .ItemHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 450;
+  user-select: none;
+}
+
+.GiBoard .ItemHeadTitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.GiBoard .ItemDescription {
+  margin-top: 4px;
+  color: #666;
+  word-wrap: break-word;
+}
+
+.GiBoard .HasContent {
+  background-color: rgba(87, 96, 106, .85);
+  border-radius: 100%;
+  display: inherit;
+}
+
+.GiBoard .Item.Progress {
+  --scolor: rgba(208, 215, 222, .3);
+  --ecolor: rgba(208, 215, 222, .3);
+  --percentage: 50%;
+  background: linear-gradient(90deg, var(--scolor), var(--ecolor) var(--percentage), #fff 0);
+}
+
+/* Badge */
+.GiBoard .Badge {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+}
+
+.GiBoard .Badge .BadgeIcon {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.GiBoard .Badge .Count {
+  border-radius: 20px;
+  background-color: rgba(175, 184, 193, 0.2);
+  color: rgb(87, 96, 106);
+  padding: 2px 5px;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+}
+
+.GiBoard .Badge .Title {
+  font-weight: 800;
+}
+
+.GiBoard .BadgeIcon.Todo {
+  background-color: rgb(45, 164, 78);
+}
+
+.GiBoard .BadgeIcon.InProgress {
+  background-color: rgb(191, 135, 0);
+}
+
+.GiBoard .BadgeIcon.Done {
+  background-color: rgb(130, 80, 223);
+}
+
+/* Avatar */
+.GiBoard .Avatars {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.GiBoard .Avatar {
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: rgb(255, 255, 255) 0 0 0 1px;
+}
