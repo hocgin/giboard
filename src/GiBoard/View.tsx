@@ -35,7 +35,7 @@ export const Item: FC<{
     <div className={'ItemHead'} onClick={toggleOpen} style={{
       cursor: hasContent ? 'pointer' : 'not-allowed'
     }}>
-      <ProgressBadge hasContent={hasContent}/> <span className={'ItemHeadTitle'}>{title}</span>
+      <ProgressBadge hasContent={false}/> <span className={'ItemHeadTitle'}>{title}</span>
       {assigness.length > 0 && <div className={'Avatars'}>
         {assigness.map(e => <Avatar src={e?.avatarUrl} login={e?.login}/>)}
       </div>}
