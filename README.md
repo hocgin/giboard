@@ -2,11 +2,17 @@
 
 > Use `github project graphql api` with Board
 
+[![npm](https://img.shields.io/npm/v/@hocgin/giboard?style=flat-square)](https://www.npmjs.com/package/@hocgin/giboard)
+
 ## Screen
 
 ![img.png](https://raw.githubusercontent.com/hocgin/giboard/main/_docs/img.png)
 
 ## Usage
+
+```shell
+pnpm install @hocgin/giboard
+```
 
 | 字段          | 类型     | 描述                       |
 |-------------|--------|--------------------------|
