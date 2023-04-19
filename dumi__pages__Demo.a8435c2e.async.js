@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_hocgin_giboard=self.webpackChunk_hocgin_giboard||[]).push([[448],{2600:function(f,n,e){e.r(n),e.d(n,{default:function(){return d}});var a=e(96095),r=e(50959),t=function(){var u=(0,a.UO)(),m=u.id,s=(0,a.WF)(),c=s.demos,i=c[m]||{},o=i.component;return o&&(0,r.createElement)(o)},d=t}}]);
