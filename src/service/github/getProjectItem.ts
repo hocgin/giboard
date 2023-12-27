@@ -37,6 +37,7 @@ const GET_PROJECT_ITEM_QUERY = `query{
                 name
                 number
                 project {
+                  id
                   title
                   items(first: 50) {
                     nodes {
@@ -51,6 +52,13 @@ const GET_PROJECT_ITEM_QUERY = `query{
                               }
                             }
                           }
+                       ... on ProjectV2ItemFieldRepositoryValue {
+                          repository {
+                            id
+                            name
+                            url
+                          }
+                        }
                         ... on ProjectV2ItemFieldDateValue {
                             date
                             field {
@@ -116,10 +124,10 @@ export function asGetProjectItem(resp: GetProjectItemResponse): AsGetProjectItem
     title: project?.title,
     shortDescription: project?.shortDescription,
     readme: project?.readme,
-    views: views.map((e: any) => ({
+    views: views.map((e) => ({
       id: e?.id,
       name: e?.name,
-      items: (e?.project?.items?.nodes ?? []).map((e: any) => {
+      items: (e?.project?.items?.nodes ?? []).map((e) => {
         let result: any = {
           id: e?.id,
         };
@@ -139,9 +147,11 @@ export function asGetProjectItem(resp: GetProjectItemResponse): AsGetProjectItem
           } else if (name === `priority`) {
             result[_name] = node?.number;
           } else if (name === `assignees`) {
-            result[_name] = (node?.users?.nodes ?? []).map((e: any) => ({
+            result[_name] = (node?.users?.nodes ?? []).map((e) => ({
               ...e
             }));
+          } else if ('repository' in node) {
+            result['repository'] = node?.repository;
           }
         }
         return result;

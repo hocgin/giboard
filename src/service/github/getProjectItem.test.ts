@@ -5,7 +5,7 @@ describe('查询项目信息', () => {
     let project = await getProjectItem({
       login: 'hocgin',
       number: 16,
-    }, "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");
+    }, "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");
     let result = asGetProjectItem(project);
     console.log(JSON.stringify(result));
   });
