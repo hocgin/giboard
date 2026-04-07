@@ -13,13 +13,14 @@ export const GiBoard: FC<{
   projectId: number;
   token: string;
   api?: string;
+  url?: any;
   title?: any;
   subtitle?: any;
   readme?: any;
   repositories?: string[];
   className?: string;
   style?: any;
-}> = ({login, style, className, title, subtitle, readme, repositories, projectId, token, api}) => {
+}> = ({login, style, className, url, title, subtitle, readme, repositories, projectId, token, api}) => {
   let [data, setData] = useState<AsGetProjectItemType>();
   let [active, setActive] = useState<number>(0);
   let [repository, setRepository] = useState<string>();
@@ -53,6 +54,7 @@ export const GiBoard: FC<{
   }, [data, active, selectedRepository]);
   return <div className={classnames(`GiBoard`, className)} style={style}>
     <Head title={title ?? data?.title}
+          href={url ?? data?.url}
           description={subtitle ?? data?.shortDescription}
           repositories={repositories}
           repository={selectedRepository}

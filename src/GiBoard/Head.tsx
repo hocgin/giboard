@@ -6,15 +6,16 @@ export const Head: FC<{
   items: { label: string, value: string; }[];
   active?: number;
   title?: string;
+  href?: string;
   description?: string;
   repositories?: string[];
   repository?: string;
   onChange?: (value: any) => void;
   onRepositoryChange?: (value: string) => void;
-}> = ({active = 0, title, description, repositories = [], repository, items = [], onChange, onRepositoryChange}) => {
+}> = ({active = 0, href, title, description, repositories = [], repository, items = [], onChange, onRepositoryChange}) => {
   return <div className={'GiHead'}>
     <div className={'GiHeadTitleWrap'}>
-      {title && <div className={'GiTitle'}>{title}</div>}
+      {title && <a className={'GiTitle'} href={href}>{title}</a>}
       {/* 标题下方展示接口返回的简要描述。 */}
       {description && <div className={'GiDescription'}>{description}</div>}
     </div>
