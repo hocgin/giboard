@@ -68,11 +68,6 @@ export const Item: FC<{
   let hasContent = !!description;
   let hasComplete = typeof item?.Complete === 'number';
   let Complete = Math.min(item?.Complete ?? 0, 5);
-  item.repository = {
-    id: "R_kgDOJYwQPA",
-    name: "giboard",
-    url: "https://github.com/hocgin/giboard"
-  }
   let hasLink = item?.repository?.url?.length
   let hasFooter = hasComplete
   return (
