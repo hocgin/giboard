@@ -26,23 +26,34 @@ export interface GetProjectItemResponse {
 // https://docs.github.com/zh/graphql/reference/objects#projectv2
 const GET_PROJECT_ITEM_QUERY = `query{
   user(login: "$login"){
+       # ProjectV2
       projectV2(number: $number) {
           url
           title
           shortDescription
           readme
-          views(last: 10) {
+          createdAt
+          updatedAt
+          #
+          views(first: 1) {
+              # https://docs.github.com/en/graphql/reference/objects#projectv2view
               nodes {
                 id
                 name
                 number
+                createdAt
+                updatedAt
+
+                # https://docs.github.com/en/graphql/reference/objects#projectv2
                 project {
                   id
                   title
-                  items(first: 50) {
+                  items(first: 100) {
+                    # https://docs.github.com/en/graphql/reference/objects#projectv2item
                     nodes {
                       id
-                      fieldValues(first: 8) {
+                      fieldValues(first: 20) {
+                        # https://docs.github.com/en/graphql/reference/unions#projectv2itemfieldvalue
                         nodes {
                         ... on ProjectV2ItemFieldTextValue {
                             text
@@ -58,6 +69,19 @@ const GET_PROJECT_ITEM_QUERY = `query{
                             name
                             url
                           }
+                        }
+                       ... on ProjectV2ItemFieldLabelValue {
+                            labels(first: 20) {
+                                nodes {
+                                    id
+                                    name
+                                }
+                            }
+                            field {
+                              ... on ProjectV2FieldCommon {
+                                name
+                              }
+                            }
                         }
                         ... on ProjectV2ItemFieldDateValue {
                             date
@@ -77,6 +101,8 @@ const GET_PROJECT_ITEM_QUERY = `query{
                           }
                         ... on ProjectV2ItemFieldIterationValue {
                             title
+                            startDate
+                            duration
                             field {
                             ... on ProjectV2FieldCommon {
                                 name
@@ -94,8 +120,8 @@ const GET_PROJECT_ITEM_QUERY = `query{
                         ... on ProjectV2ItemFieldUserValue {
                             users(first: 5){
                               nodes {
-                                login,
-                                  avatarUrl
+                                login
+                                avatarUrl
                               }
                             }
                             field {
@@ -104,6 +130,7 @@ const GET_PROJECT_ITEM_QUERY = `query{
                               }
                             }
                           }
+
                         }
                       }
                     }

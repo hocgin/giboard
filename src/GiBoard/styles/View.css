@@ -63,16 +63,84 @@
   user-select: none;
 }
 
+.GiBoard .ItemALinkItemText {
+  display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 20px;
+  max-width: 80px;
+  font-size: 13px;
+  color: #59636e;
+}
+.GiBoard .ItemALinkItem {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1;
+  justify-content: flex-end;
+}
 .GiBoard .ItemHeadTitle {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
+.GiBoard .ALinkItem {
+  display: flex;
+  align-items: center;
+  transform: rotate(145deg);
+  border-radius: 100%;
+  background-color: rgba(102, 102, 102, 0.05);
+  transition: all 0.3s ease;
+  color: #59636e;
+}
+
+.GiBoard .ALinkItem:hover {
+  transform: rotate(180deg);
+  background-color: rgba(102, 102, 102, 0.1);
+}
+
+.GiBoard .ItemHasItem {
+  padding-bottom: 5px!important;
+}
+
+.GiBoard .ItemFooter {
+  display: flex;
+  padding-top: 5px;
+}
+.GiBoard .ItemSegmentedBarItem {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 12px;
+  color: #59636e;
+  align-items: center;
+}
 .GiBoard .ItemDescription {
   margin-top: 4px;
   color: #666;
   word-wrap: break-word;
+  flex: 1;
+}
+
+.GiBoard .ItemSegmentedBar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  width: 100px;
+}
+
+.GiBoard .ItemSegmentedBar .ItemSegment {
+  height: 6px;
+  border-radius: 999px;
+  background: #d8cef1;
+  transition: background-color .2s ease;
+}
+
+.GiBoard .ItemSegmentedBar .ItemSegment.Filled {
+  background: #7b52d7;
 }
 
 .GiBoard .HasContent {
@@ -81,12 +149,12 @@
   display: inherit;
 }
 
-.GiBoard .Item.Progress {
-  --scolor: rgba(208, 215, 222, .3);
-  --ecolor: rgba(208, 215, 222, .3);
-  --percentage: 50%;
-  background: linear-gradient(90deg, var(--scolor), var(--ecolor) var(--percentage), #fff 0);
-}
+/*.GiBoard .Item.Progress {*/
+/*  --scolor: rgba(208, 215, 222, .3);*/
+/*  --ecolor: rgba(208, 215, 222, .3);*/
+/*  --percentage: 50%;*/
+/*  background: linear-gradient(90deg, var(--scolor), var(--ecolor) var(--percentage), #fff 0);*/
+/*}*/
 
 /* Badge */
 .GiBoard .Badge {

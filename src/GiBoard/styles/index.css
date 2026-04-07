@@ -3,4 +3,26 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  gap: 5px;
+}
+
+.GiBoard .GiReadme {
+  padding: 12px 14px;
+  border: 1px solid rgb(216, 222, 228);
+  background: #f7f8fa;
+  border-radius: 10px;
+}
+
+.GiBoard .GiReadme .GiReadmeTitle {
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.GiBoard .GiReadme .GiReadmeBody {
+  color: rgba(36, 41, 47, .75);
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
 }

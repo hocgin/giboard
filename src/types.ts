@@ -3,6 +3,11 @@ export type ViewItemType = {
   Title: string;
   Status: 'In Progress' | 'Done' | 'Todo';
   Description?: string;
+  repository?: {
+    id?: string;
+    name?: string;
+    url?: string;
+  };
   Assignees?: {
     avatarUrl?: string;
     login?: string;

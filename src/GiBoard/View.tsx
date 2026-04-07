@@ -5,65 +5,22 @@ import classnames from 'classnames';
 import './styles/View.css';
 import {useBoolean} from "ahooks";
 
-export const List: FC<{
-  title: React.ReactElement | string;
-  description?: string;
-  items?: ViewItemType[];
-}> = ({title, description, items = []}) => {
-  return <div className={'List'}>
-    <div className={'ListHead'}>
-      <div>{title}</div>
-      {description && <div className={'Description'}>{description}</div>}
-    </div>
-    <div className={'Body'}>
-      {items.map((e: ViewItemType) => <Item item={e}/>)}
-    </div>
-  </div>;
-};
+function percentage(number: number = 0) {
+  let val = Math.min(Math.max(number, 0), 10) * 10;
+  return val.toFixed(2) + "%"
+}
 
-export const Item: FC<{
-  item: ViewItemType
-}> = ({item}) => {
-  let [open, {toggle: toggleOpen, setFalse}] = useBoolean(false);
-  let assigness = item?.Assignees ?? [];
-  let description = item?.Description ?? item?.Title;
-  let title = item?.Title ?? description;
-  let hasContent = !!description;
-  return <div className={classnames('Item', 'Progress')} style={{
-    "--percentage": percentage(item?.Complete)
-  } as any}>
-    <div className={'ItemHead'} onClick={toggleOpen} style={{
-      cursor: hasContent ? 'pointer' : 'not-allowed'
-    }}>
-      <ProgressBadge hasContent={false}/> <span className={'ItemHeadTitle'}>{title}</span>
-      {assigness.length > 0 && <div className={'Avatars'}>
-        {assigness.map(e => <Avatar src={e?.avatarUrl} login={e?.login}/>)}
-      </div>}
-    </div>
-    {(open && hasContent) && <div className={'ItemDescription'}>{description}</div>}
-  </div>;
-};
+function normalizeComplete(number: number = 0) {
+  return Math.min(Math.max(Math.round(number), 0), 10);
+}
 
-export const View: FC<{
-  view: ViewType;
-}> = ({view}) => {
-  let {InProgress = [], Todo = [], Done = []} = useMemo(() => {
-    let group = LangKit.toGroup((view?.items ?? []).sort((a, b) => LangKit.sortDesc(a?.Priority ?? 0, b?.Priority ?? 0)), e => e?.Status);
-    console.log('group', group, view)
-    return ({
-      InProgress: group.get("In Progress") ?? [],
-      Todo: group.get('Todo') ?? [],
-      Done: group.get('Done') ?? [],
-    })
-  }, [view?.items]);
-  return <div className={`View`}>
-    <List title={<Badge className={'Todo'} count={Todo.length}>Todo</Badge>} items={Todo}
-          description={'This item hasn\'t been started'}/>
-    <List title={<Badge className={'InProgress'} count={InProgress.length}>In Progress</Badge>} items={InProgress}
-          description={'This is actively being worked on'}/>
-    <List title={<Badge className={'Done'} count={Done.length}>Done</Badge>} items={Done}
-          description={'This has been completed'}/>
-  </div>;
+export const Avatar: FC<{
+  login?: string
+  src?: string
+}> = ({src, login}) => {
+  return <a className={'Avatar'} href={`https://github.com/${login}`}>
+    <img src={src} alt={login}/>
+  </a>
 };
 
 export const Badge: FC<{
@@ -101,16 +58,152 @@ export const ProgressBadge: FC<{
   </span>
 };
 
-export const Avatar: FC<{
-  login?: string
-  src?: string
-}> = ({src, login}) => {
-  return <a className={'Avatar'} href={`https://github.com/${login}`}>
-    <img src={src} alt={login}/>
-  </a>
+export const Item: FC<{
+  item: ViewItemType
+}> = ({item}) => {
+  let [open, {toggle: toggleOpen}] = useBoolean(false);
+  let assigness = item?.Assignees ?? [];
+  let description = item?.Description ?? item?.Title;
+  let title = item?.Title ?? description;
+  let hasContent = !!description;
+  let hasComplete = typeof item?.Complete === 'number';
+  let Complete = Math.min(item?.Complete ?? 0, 5);
+  item.repository = {
+    id: "R_kgDOJYwQPA",
+    name: "giboard",
+    url: "https://github.com/hocgin/giboard"
+  }
+  let hasLink = item?.repository?.url?.length
+  let hasFooter = hasComplete
+  return (
+    <div
+      className={classnames('Item', 'Progress', hasFooter ? "ItemHasItem" : null)}
+      style={
+        {
+          '--percentage': percentage(Complete),
+        } as any
+      }
+    >
+      <div
+        className={'ItemHead'}
+        onClick={toggleOpen}
+        style={{
+          cursor: hasContent ? 'pointer' : 'not-allowed',
+        }}
+      >
+        <ProgressBadge hasContent={false} />{' '}
+        <span className={'ItemHeadTitle'}>{title}</span>
+        {assigness.length > 0 && (
+          <div className={'Avatars'}>
+            {assigness.map((e, index) => (
+              <Avatar
+                key={`${e?.login ?? 'assignee'}-${index}`}
+                src={e?.avatarUrl}
+                login={e?.login}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+      {open && hasContent && (
+        <div className={'ItemDescription'}>{description}</div>
+      )}
+      {hasFooter &&
+        <div className={'ItemFooter'}>
+          {hasComplete && (
+            <div className={'ItemSegmentedBarItem'}>
+              <div
+                className={'ItemSegmentedBar'}
+                aria-label={`Complete ${Complete} of 5`}
+              >
+                {/* Complete 采用 0-10 区间，底部用 10 段展示进度。 */}
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className={classnames('ItemSegment', {
+                      ['Filled']: i < normalizeComplete(Complete),
+                    })}
+                  />
+                ))}
+              </div>
+              <span>{((Complete / 5) * 100).toFixed(0) + '%'}</span>
+            </div>
+          )}
+          {/*<div style={{ flex: '1' }}></div>*/}
+          {hasLink && <a className={'ItemALinkItem'} href={item?.repository?.url}>
+            {/*<div className={'ItemALinkItemText'}>{item?.repository?.name}</div>*/}
+            <div className={'ALinkItem'}>
+              <ALink/>
+            </div>
+          </a>}
+
+        </div>
+      }
+    </div>
+  );
 };
 
-function percentage(number: number = 0) {
-  let val = Math.min(Math.max(number, 0), 100);
-  return val.toFixed(2) + "%"
-}
+const ALink: React.FC<{}> = ({}) => {
+  return (
+    <svg
+      width="1.2em"
+      height="1.2em"
+      className="s-6"
+      aria-hidden="true"
+      data-astro-cid-zyo63yeq="true"
+      data-icon="left-arrow"
+    >
+      <symbol id="ai:local:left-arrow" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M17 11H9.41l3.3-3.29a1.004 1.004 0 1 0-1.42-1.42l-5 5a1 1 0 0 0-.21.33 1 1 0 0 0 0 .76 1 1 0 0 0 .21.33l5 5a1.002 1.002 0 0 0 1.639-.325 1 1 0 0 0-.219-1.095L9.41 13H17a1 1 0 0 0 0-2"
+        ></path>
+      </symbol>
+      <use href="#ai:local:left-arrow"></use>
+    </svg>
+  ) as any;
+};
+
+export const List: FC<{
+  title: React.ReactElement | string;
+  description?: string;
+  items?: ViewItemType[];
+}> = ({ title, description, items = [] }) => {
+  return (
+    <div className={'List'}>
+      <div className={'ListHead'}>
+        <div>{title}</div>
+        {description?.length && (
+          <div className={'Description'}>{description}</div>
+        )}
+      </div>
+      <div className={'Body'}>
+        {items.map((e: ViewItemType) => (
+          <Item key={e?.id} item={e} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export const View: FC<{
+  view: ViewType;
+}> = ({view}) => {
+  let {InProgress = [], Todo = [], Done = []} = useMemo(() => {
+    let group = LangKit.toGroup((view?.items ?? []).sort((a, b) => LangKit.sortDesc(a?.Priority ?? 0, b?.Priority ?? 0)), e => e?.Status);
+    console.log('group', group, view)
+    return ({
+      InProgress: group.get("In Progress") ?? [],
+      Todo: group.get('Todo') ?? [],
+      Done: group.get('Done') ?? [],
+    })
+  }, [view?.items]);
+  return <div className={`View`}>
+    <List title={<Badge className={'Todo'} count={Todo.length}>Todo</Badge>} items={Todo}
+          description={'This item hasn\'t been started'}/>
+    <List title={<Badge className={'InProgress'} count={InProgress.length}>In Progress</Badge>} items={InProgress}
+          description={'This is actively being worked on'}/>
+    <List title={<Badge className={'Done'} count={Done.length}>Done</Badge>} items={Done}
+          description={'This has been completed'}/>
+  </div>;
+};

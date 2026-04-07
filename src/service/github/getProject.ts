@@ -20,7 +20,7 @@ export interface GetProjectBody {
 }
 
 export interface GetProjectResponse {
-  data: {};
+  data: any;
 }
 
 const GET_PROJECT_QUERY = `
